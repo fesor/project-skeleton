@@ -1,0 +1,6 @@
+includes:
+	- vendor/finwe/phpstan-faker/extension.neon
+
+parameters:
+	ignoreErrors:
+

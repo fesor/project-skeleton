@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+    php:
+        environment:
+            - SYMFONY_ENV=test
+            - DB_HOST=database_test
+
+    database_test:
+        extends:
+            file: docker-compose.dev.yml
+            service: database
+        tmpfs:
+            - /var/lib/postgresql/data

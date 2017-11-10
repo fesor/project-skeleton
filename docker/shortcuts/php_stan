@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+docker run --rm -v $PWD:/app phpstan/phpstan \
+ analyse -l 3 /app/src -c phpstan.neon

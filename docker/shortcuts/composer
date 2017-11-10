@@ -1,0 +1,8 @@
+mkdir -p ~/.composer
+COMPOSER_HOME=~/.composer
+
+docker run --rm --interactive --tty \
+    --volume $PWD:/app \
+    --volume $COMPOSER_HOME:/composer \
+    --user $(id -u):$(id -g) \
+    composer $@

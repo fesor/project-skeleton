@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Wait for database
+timeout 30 bash <<HEALTHCHECK
+    until ./bin/console doctrine:migrations:status &>/dev/null; do
+        sleep 0.1
+        echo "Retry to connect to database"
+    done
+HEALTHCHECK

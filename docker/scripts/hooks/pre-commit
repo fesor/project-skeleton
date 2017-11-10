@@ -1,0 +1,13 @@
+#!/bin/bash
+
+while read -r file;
+do
+  file=${file:1}
+  file="$(echo -e "${file}" | tr -d '[[:space:]]')"
+  echo $file
+  if [[ $file = *.php ]];
+  then
+    php bin/php-cs-fixer fix "$file"
+    git add "$file"
+  fi
+done < <(git diff --cached --name-status --diff-filter=ACM)

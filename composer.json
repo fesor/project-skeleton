@@ -1,0 +1,81 @@
+{
+    "name": "intellectsoft/backend-skeleton",
+    "license": "MIT",
+    "type": "project",
+    "description": "Backend template project",
+    "autoload": {
+        "psr-4": { "App\\": "src/" },
+        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+    },
+    "autoload-dev": {
+        "psr-4": {"Tests\\": "tests"},
+        "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
+    },
+    "require": {
+        "php": ">=7.0.1",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/orm": "^2.5",
+        "incenteev/composer-parameter-handler": "^2.0",
+        "sensio/distribution-bundle": "^5.0.19",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "symfony/monolog-bundle": "^3.1.0",
+        "symfony/polyfill-apcu": "^1.0",
+        "symfony/swiftmailer-bundle": "^2.3.10",
+        "symfony/symfony": "3.3.*",
+        "twig/twig": "^1.0||^2.0",
+        "bernard/bernard": "^1.0.0-alpha4@dev",
+        "bernard/bernard-bundle": "^2.0.0-alpha1@dev",
+        "doctrine/doctrine-cache-bundle": "^1.3",
+        "doctrine/doctrine-migrations-bundle": "~1.2.0",
+        "fesor/request-objects": "^0.2.1",
+        "friendsofsymfony/rest-bundle": "^2.1",
+        "fzaninotto/faker": "^1.6",
+        "samj/fractal-bundle": "^0.3.0",
+        "lexik/jwt-authentication-bundle": "^2.0",
+        "symfony/dotenv": "^3.3"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "~2.0",
+        "phpunit/phpunit": "^5.6",
+        "symfony/phpunit-bridge": "^3.0",
+        "phpstan/phpstan": "^0.8.0",
+        "finwe/phpstan-faker": "^0.2.0",
+        "doctrine/doctrine-fixtures-bundle": "^2.3"
+    },
+    "scripts": {
+        "start": [
+            "composer install",
+            "docker-compose up -d",
+            "docker-compose run --rm php bin/wait_for_db",
+            "docker/shortcuts/console doctr:migration:migrate -n --allow-no-migration",
+            "docker/shortcuts/console doctrine:fixtures:load -n --fixtures tests/Fixtures/ORM"
+        ],
+        "prepare-project": [
+            "ln -sf `pwd`/docker/scripts/hooks/pre-commit .git/hooks/pre-commit"
+        ],
+        "symfony-scripts": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "@prepare-project"
+        ],
+        "post-install-cmd": [
+            "@symfony-scripts"
+        ],
+        "post-update-cmd": [
+            "@symfony-scripts"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "workflow/docker/nginx/web",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    }
+}

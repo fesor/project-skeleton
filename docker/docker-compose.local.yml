@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+    php:
+        command: ["php-fpm", "--allow-to-run-as-root", "-d", "zend_extension=xdebug.so"]
+        volumes:
+            - "../.:/app"
+
+    front:
+        environment:
+            - VIRTUAL_HOST=template.docker
+            - VIRTUAL_PORT=80

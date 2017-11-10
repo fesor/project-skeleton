@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+    front:
+        environment:
+            - USE_CORS_PROXY=yes
+
+    database:
+        image: postgres:9.6
+        environment:
+            - POSTGRES_USER=${DB_USER}
+            - POSTGRES_DB=${DB_NAME}
+            - POSTGRES_PASSWORD=${DB_PASS}
+            - PGPASSWORD=${DB_PASS}
+
+    docker_monitoring:
+        image: portainer/portainer:1.13.5
+        ports:
+            - 0.0.0.0:8080:9000
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        entrypoint:
+            - /portainer
+            - --admin-password
+            - ${PORTAINER_PASS}
+            - -H
+            - unix:///var/run/docker.sock

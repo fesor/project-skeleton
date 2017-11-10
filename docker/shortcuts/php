@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker-compose run --user $(id -u) --no-deps --rm php $@

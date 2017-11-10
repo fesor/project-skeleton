@@ -1,0 +1,12 @@
+# Symfony specific
+/vendor/
+/bin/*
+!/bin/healthcheck
+!/bin/boot*
+!/bin/console
+!/bin/wait_for_db
+/var/*
+/composer.phar
+docker/keys/*
+!.gitkeep
+.php_cs.cache

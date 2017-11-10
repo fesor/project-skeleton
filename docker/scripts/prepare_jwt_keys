@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+jwt_private_key='docker/keys/jwt_private.pem'
+jwt_public_key='docker/keys/jwt_public.pem'
+
+if ([ ! -f $jwt_private_key ] || [ ! -f $jwt_public_key ]); then
+    openssl genrsa -out $jwt_private_key 4096
+    openssl rsa -pubout -in $jwt_private_key -out $jwt_public_key
+fi

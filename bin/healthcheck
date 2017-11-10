@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+# This scripts awaits for backend to be successfully deployed
+# And fails by timeout
+# Usage: deploy_health.sh hostname [timeout]
+#
+# Example:
+#      deploy_health.sh futureworld.docker
+#
+#   Or with timeout
+#      deploy_health.sh futureworld.docker 30
+
+host=$1
+timeout_value=${2:-240}
+
+timeout $timeout_value bash <<HEALTHCHECK
+    echo -n "Checking API Health.."
+    until [ "204" -eq $(curl -L -s -o /dev/null -w "%{http_code}" $host/api/v1/_health) ]; do
+        echo -n "."
+        sleep 5
+    done
+HEALTHCHECK
+echo "\n"

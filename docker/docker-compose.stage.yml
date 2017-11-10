@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+    front:
+        environment:
+            - USE_CORS_PROXY=yes
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - "/certs/domain.crt:/certs/domain.crt:ro"
+            - "/certs/domain.key:/certs/domain.key:ro"
+
+
+    php:
+        environment:
+            - RELOAD_DATA
+
+    database:
+        ports:
+            # QA wants to work with database on server
+            - 0.0.0.0:5432:5432

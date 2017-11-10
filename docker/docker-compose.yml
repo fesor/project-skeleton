@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+
+    php:
+        image: ${REGISTRY_URL}${REPOSITORY_NAME}php:${DOCKER_TAG}
+        build:
+            context: './../'
+            dockerfile: 'docker/php/Dockerfile'
+        environment:
+            - SYMFONY_ENV
+            - DB_HOST
+            - DB_NAME
+            - DB_USER
+            - DB_PASS
+            - APP_SECRET
+        volumes:
+            - "${JWT_PRIVATE_KEY_PATH}:/keys/jwt_private.pem:ro"
+            - "${JWT_PUBLIC_KEY_PATH}:/keys/jwt_public.pem:ro"
+
+    front:
+        image: ${REGISTRY_URL}${REPOSITORY_NAME}front:${DOCKER_TAG}
+        build: 'nginx'
+        depends_on:
+            - php
+        volumes:
+            - "${FRONTEND_HOME}:/srv:ro"

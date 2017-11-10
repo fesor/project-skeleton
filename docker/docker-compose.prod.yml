@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+
+    front:
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - "/certs/domain.crt:/certs/domain.crt:ro"
+            - "/certs/domain.key:/certs/domain.key:ro"
+        logging:
+            driver: syslog
+    php:
+        logging:
+            driver: syslog

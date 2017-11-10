@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Starts test suite
+#
+# Usage:  test [<suite>] [<path>]
+#
+# Examples:
+#     run_tests                 - starts all tests suites
+#     run_tests unit            - starts unit test suite
+#     run_tests integration     - starts integration test suite
+#     run_tests integ           - you may use part of string
+#     run_tests u ./tests/User/ - you may run suite for part of tests
+
+
+suite=$(echo "$1" | awk '{print tolower($0)}')
+tests_path=$2
+
+run_unit_tests=false
+run_integration_tests=false
+# Normalize input
+if [[ "unit" == "$suite"* ]]; then
+  run_unit_tests=true
+fi
+if [[ "integration" == "$suite"* ]]; then
+  run_integration_tests=true
+fi
+
+if [[ true == "$run_unit_tests" ]]; then
+    echo "Run Unit Test Suite"
+
+    docker-compose run --no-deps --rm php bin/phpunit --testsuite unit "$tests_path"
+fi
+
+if [[ true == "$run_integration_tests" ]]; then
+    echo "Run Integration Test Suite"
+
+    [ -z "$COMPOSE_FILE" ] && COMPOSE_FILE=$(cat .env | grep COMPOSE_FILE | cut -d = -f 2)
+    COMPOSE_FILE="$COMPOSE_FILE:workflow/docker/docker-compose.test.yml";
+
+    export COMPOSE_FILE=$COMPOSE_FILE
+
+    docker-compose up -d database_test
+    cmd="bin/wait_for_db"
+    cmd="$cmd && bin/console doctrine:schema:update --force"
+    cmd="$cmd && bin/phpunit --testsuite integration $tests_path"
+
+    passed=0;
+    docker-compose run --rm php bash -c "$cmd" || passed=$?
+
+    [ -z "$KEEP_TEST_DB" ] \
+        && docker-compose kill database_test \
+        && docker-compose rm -f database_test
+
+    [ "0" = $passed ] || exit $passed
+
+fi

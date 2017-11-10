@@ -1,0 +1,4 @@
+bernard:
+    driver: file # you can choose predis, phpredis, file, doctrine, sqs etc.
+    options:
+        directory: '%kernel.cache_dir%/bernard'
