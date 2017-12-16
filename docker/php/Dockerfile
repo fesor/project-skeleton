@@ -1,13 +1,12 @@
-FROM php:7.1-fpm
+FROM php:7.2-fpm
 
 RUN apt-get update \
-    && apt-get install -y libpq-dev \
+    && apt-get install -y libpq-dev libgmp-dev git zip \
     && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install \
-        bcmath \
+        gmp \
         mbstring \
-        zip \
         opcache \
         pdo pdo_pgsql
 
@@ -20,8 +19,15 @@ RUN yes | pecl install apcu xdebug-beta \
         && echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 WORKDIR /app
-CMD ["php-fpm", "--allow-to-run-as-root"]
+
+RUN curl --silent --show-error https://getcomposer.org/installer | \
+    php -- --install-dir=/usr/bin/ --filename=composer
 
 COPY docker/php/config/www.conf /usr/local/etc/php-fpm.d/www.conf
+CMD ["php-fpm", "--allow-to-run-as-root"]
+
+ARG COMPOSER_AUTH
+ADD composer.json composer.lock ./
+RUN composer install --no-scripts --no-autoloader --no-interaction
 COPY . /app/
 RUN bin/console -e=prod cache:warmup
