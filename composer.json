@@ -26,7 +26,6 @@
         "doctrine/doctrine-migrations-bundle": "~1.2.0",
         "fesor/request-objects": "^0.2.1",
         "friendsofsymfony/rest-bundle": "^2.1",
-        "samj/fractal-bundle": "^0.3.0",
         "lexik/jwt-authentication-bundle": "^2.0",
         "symfony/dotenv": "^3.4"
     },

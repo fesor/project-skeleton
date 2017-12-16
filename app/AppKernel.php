@@ -17,7 +17,6 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new \Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new \FOS\RestBundle\FOSRestBundle(),
-            new SamJ\FractalBundle\SamJFractalBundle(),
             new \Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new \Fesor\RequestObject\Bundle\RequestObjectBundle(),
             new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),

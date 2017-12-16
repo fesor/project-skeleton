@@ -28,6 +28,8 @@ CMD ["php-fpm", "--allow-to-run-as-root"]
 
 ARG COMPOSER_AUTH
 ADD composer.json composer.lock ./
-RUN composer install --no-scripts --no-autoloader --no-interaction
+RUN composer install --no-scripts --no-autoloader --no-suggest && \
+    composer clear-cache
 COPY . /app/
+RUN composer dump --optimize
 RUN bin/console -e=prod cache:warmup
