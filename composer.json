@@ -1,40 +1,39 @@
 {
-    "name": "fesor/projec-template",
+    "name": "fesor/project-template",
     "license": "MIT",
     "type": "project",
     "description": "Basic API project template",
     "autoload": {
-        "psr-4": { "App\\": "src/" },
-        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+        "psr-4": { "App\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": {"Tests\\": "tests"},
-        "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
+        "psr-4": {"Tests\\": "tests"}
     },
     "require": {
-        "php": ">=7.1.0",
-        "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/orm": "^2.5",
-        "sensio/distribution-bundle": "^5.0.19",
-        "sensio/framework-extra-bundle": "^5.0.0",
-        "symfony/monolog-bundle": "^3.1.0",
-        "symfony/polyfill-apcu": "^1.0",
-        "symfony/swiftmailer-bundle": "^2.6.4",
-        "symfony/symfony": "3.4.*",
-        "twig/twig": "^1.0||^2.0",
-        "doctrine/doctrine-cache-bundle": "^1.3",
-        "doctrine/doctrine-migrations-bundle": "~1.2.0",
-        "fesor/request-objects": "^0.2.1",
-        "friendsofsymfony/rest-bundle": "^2.1",
-        "lexik/jwt-authentication-bundle": "^2.0",
-        "symfony/dotenv": "^3.4"
+        "php": "^7.1.3",
+        "ext-iconv": "*",
+        "symfony/console": "^4.0",
+        "symfony/debug-bundle": "^4.0",
+        "symfony/flex": "^1.0",
+        "symfony/framework-bundle": "^4.0",
+        "symfony/lts": "^4@dev",
+        "symfony/monolog-bundle": "^3.1",
+        "symfony/orm-pack": "^1.0",
+        "symfony/profiler-pack": "^1.0",
+        "symfony/serializer-pack": "^1.0",
+        "symfony/yaml": "^4.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "~2.0",
         "phpunit/phpunit": "^5.6",
         "symfony/phpunit-bridge": "^3.0",
-        "doctrine/doctrine-fixtures-bundle": "^2.3",
-        "fzaninotto/faker": "^1.7"
+        "fzaninotto/faker": "^1.7",
+        "symfony/dotenv": "^4.0"
+    },
+    "replace": {
+        "symfony/polyfill-apcu": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php56": "*"
     },
     "scripts": {
         "start": [
@@ -47,21 +46,22 @@
         "prepare-project": [
             "ln -sf `pwd`/docker/scripts/hooks/pre-commit .git/hooks/pre-commit"
         ],
-        "symfony-scripts": [
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+        "post-install-cmd": [
             "@prepare-project"
         ],
-        "post-install-cmd": [
-            "@symfony-scripts"
-        ],
         "post-update-cmd": [
-            "@symfony-scripts"
+            "@prepare-project"
         ]
     },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
     },
     "extra": {
         "symfony-app-dir": "app",

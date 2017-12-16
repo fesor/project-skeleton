@@ -1,6 +1,9 @@
 Project Skeleton
 ===================================
 
+composer req security
+composer req serialization
+
 ## Build 
 
 Please follow this section in order to build images with application locally or for CI configuration.

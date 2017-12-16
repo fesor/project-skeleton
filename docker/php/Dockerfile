@@ -29,7 +29,7 @@ COPY docker/php/config/www.conf /usr/local/etc/php-fpm.d/www.conf
 CMD ["php-fpm", "--allow-to-run-as-root"]
 
 ARG COMPOSER_AUTH
-ADD composer.json composer.lock ./
+ADD composer.json composer.lock symfony.lock ./
 RUN composer install --no-scripts --no-autoloader --no-suggest && \
     composer clear-cache
 COPY . /app/

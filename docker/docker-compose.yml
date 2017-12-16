@@ -13,6 +13,7 @@ services:
             - SYMFONY_ENV
             - DB_HOST
             - DB_NAME
+            - DATABASE_URL
             - DB_USER
             - DB_PASS
             - APP_SECRET
