@@ -21,7 +21,9 @@ RUN yes | pecl install apcu xdebug-beta \
 WORKDIR /app
 
 RUN curl --silent --show-error https://getcomposer.org/installer | \
-    php -- --install-dir=/usr/bin/ --filename=composer
+    php -- --install-dir=/usr/bin/ --filename=composer && \
+    composer global require hirak/prestissimo && \
+    composer clear-cache
 
 COPY docker/php/config/www.conf /usr/local/etc/php-fpm.d/www.conf
 CMD ["php-fpm", "--allow-to-run-as-root"]
