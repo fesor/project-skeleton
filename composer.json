@@ -15,13 +15,12 @@
         "php": ">=7.1.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
-        "incenteev/composer-parameter-handler": "^2.0",
         "sensio/distribution-bundle": "^5.0.19",
-        "sensio/framework-extra-bundle": "^3.0.2",
+        "sensio/framework-extra-bundle": "^5.0.0",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",
-        "symfony/swiftmailer-bundle": "^2.3.10",
-        "symfony/symfony": "3.3.*",
+        "symfony/swiftmailer-bundle": "^2.6.4",
+        "symfony/symfony": "3.4.*",
         "twig/twig": "^1.0||^2.0",
         "doctrine/doctrine-cache-bundle": "^1.3",
         "doctrine/doctrine-migrations-bundle": "~1.2.0",
@@ -29,7 +28,7 @@
         "friendsofsymfony/rest-bundle": "^2.1",
         "samj/fractal-bundle": "^0.3.0",
         "lexik/jwt-authentication-bundle": "^2.0",
-        "symfony/dotenv": "^3.3"
+        "symfony/dotenv": "^3.4"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "~2.0",
