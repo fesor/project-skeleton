@@ -19,10 +19,6 @@ RUN yes | pecl install apcu xdebug-beta \
         && echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
         && echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/xdebug.ini
 
-RUN apt-get update \
- && apt-get install -y cron \
- && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /app
 CMD ["php-fpm", "--allow-to-run-as-root"]
 
